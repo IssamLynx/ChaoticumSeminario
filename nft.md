@@ -1,4 +1,4 @@
-## un usage de NFT
+## Usages de NFT
 
 # Brevets et propriété intellectuelle
 Les utilisateurs peuvent démontrer la propriété de tout matériel à l'aide de jetons NFT.
