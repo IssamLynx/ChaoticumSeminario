@@ -18,6 +18,7 @@
     <script src="asset/js/all.min.js"></script>
     <script src="asset/js/amazelogo.js"></script>
     <style>
+        
         #logoMazePetit {
             height: 60px;
             width: 120px;
@@ -33,6 +34,34 @@
         }
         html, body {margin: 0; height: 100%; overflow: hidden}
 
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+:not(html) {
+    font-family: 'orbitron';
+}
+body {
+    background-color: #ddd;
+}
+
+.timer span {
+    display: block;
+    font-size: 20px;
+}
+.btns button {
+    width: 80px;
+    padding: 5px 0;
+    margin: 0 3px;
+    border: 0;
+    border-radius: 5px;
+    font-size: 13px;
+    background-color: #ddd;
+    box-shadow: 0 2px 3px #aaa;
+}
+.btns button:hover{
+    transition: .7s;
+    background-color: #f33;
+    box-shadow: 0 0 15px #999;
+}
     </style>
 </head>
 
@@ -74,13 +103,25 @@
                                                 alt="Université Paris 8" />
                                         </a>
                                     </li>
+                                    <li class="nav-item">
 
+                
                                     <li class="nav-item">
                                         <button id="btnNewAlea" type="button"  class="btn btn-danger">
                                             <i class="fa-solid fa-shuffle fa-2xl"></i>
                                         </button>
                                     </li>
-
+                                    <div class="container">
+                                        <div class="timer">
+                                            <span id="chronos">00 : 00 : 00</span>
+                                        </div>
+                                        <div class="btns">
+                                            <button id="démarrer">démarrer</button>
+                                            <button id="arrêter">arrêter</button>
+                                            <button id="effacer">effacer</button>
+                                        </div>
+                                        </div>
+                                         </li>   
                                 </ul>
                             </div>
                         </div>
@@ -88,6 +129,51 @@
                 </div>
             </header>
             <script>
+
+let chronos = document.getElementById("chronos");
+let startBtn = document.getElementById("démarrer");
+let stopBtn = document.getElementById("arrêter");
+let resetBtn = document.getElementById("effacer");
+let checkBtn = true;
+let timer;
+
+//___________sec, min, hour
+let timerArr = [0, 0, 0];
+
+function timerHandler() {
+  timerArr[0]++;
+  if (timerArr[0] > 59) {
+    timerArr[1]++;
+    timerArr[0] = 0;
+    if (timerArr[1] > 59) {
+      timerArr[2]++;
+      timerArr[1] = 0;
+    }
+  }
+  for (let i = 0; i < timerArr.length; i++) {
+    if (String(timerArr[i]).length < 2) timerArr[i] = "0" + timerArr[i];
+    else;
+  }
+  chronos.innerHTML = `${timerArr[2]} : ${timerArr[1]} : ${timerArr[0]}`;
+  timer = setTimeout(timerHandler, 1000);
+}
+
+startBtn.addEventListener("click", () => {
+  if (checkBtn) {
+    timer = setTimeout(timerHandler, 1000);
+    checkBtn = false;
+  }
+});
+stopBtn.addEventListener("click", () => {
+  checkBtn = true;
+  clearTimeout(timer);
+});
+resetBtn.addEventListener("click", () => {
+  checkBtn = true;
+  clearTimeout(timer);
+  chronos.innerHTML = "00 : 00 : 00";
+});
+
                     const audioEffect = new Audio();
             audioEffect.src = "./click1.mp3";
 
